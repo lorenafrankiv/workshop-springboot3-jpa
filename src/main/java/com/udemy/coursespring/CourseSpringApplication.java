@@ -1,5 +1,6 @@
 package com.udemy.coursespring;
 
+import com.udemy.coursespring.resources.UserResource;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

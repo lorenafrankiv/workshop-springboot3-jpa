@@ -3,7 +3,9 @@ package com.udemy.coursespring.services;
 import com.udemy.coursespring.entities.User;
 import com.udemy.coursespring.repositories.UserRepository;
 import com.udemy.coursespring.services.exceptions.ResourceNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.stylesheets.LinkStyle;
@@ -31,13 +33,17 @@ public class UserService {
     }
 
     public void delete(Long id) {
-        repository.deleteById(id);
+            repository.deleteById(id);
     }
 
     public User update(Long id, User obj) {
-        User entity = repository.getReferenceById(id);
+        try {User entity = repository.getReferenceById(id);
         updateData(entity, obj);
         return repository.save(entity);
+        }
+        catch (EntityNotFoundException e){
+            throw new ResourceNotFoundException(id);
+        }
     }
 
     private void updateData(User entity, User obj) {
